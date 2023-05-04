@@ -1,0 +1,27 @@
+.l-mainView {
+    display: grid;
+    grid-template-areas:
+        "identity"
+        "chat"
+        "rooms";
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr auto;
+    gap: 0 1em;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+
+    &__ {
+        &chat {
+            grid-area: chat;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    @media screen and (min-width: 64em) {
+        grid-template-areas:
+            "identity identity"
+            "chat rooms";
+    }
+}

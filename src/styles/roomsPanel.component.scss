@@ -1,0 +1,7 @@
+@use "./themes.config.scss";
+.c-roomsPanel {
+    @extend %themeDark;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    grid-area: rooms;
+}

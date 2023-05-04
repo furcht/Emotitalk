@@ -1,0 +1,14 @@
+@use "./themes.config.scss";
+.c-mainNav {
+    @extend %themeDark;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    grid-area: identity;
+
+    &__ {
+        &logo {
+            font-size: 1.5em;
+            span { font-size: 75%; }
+        }
+    }
+}

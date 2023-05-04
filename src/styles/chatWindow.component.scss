@@ -1,0 +1,7 @@
+.c-chatWindow {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    grid-area: chat;
+    flex-grow: 1;
+    padding: 1.25em;
+}
