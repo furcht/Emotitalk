@@ -30,6 +30,9 @@ export default function Home() {
     socket.on('connect', () => {
       socket.emit("connected");
     })
+    socket.on('handshake', obj => {
+      console.log('Handshake Complete', obj);
+    })
   }
 
   useEffect(() => {
