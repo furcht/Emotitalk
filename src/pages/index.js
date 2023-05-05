@@ -25,7 +25,7 @@ export default function Home() {
 
   const initializeSocket = async () => {
     // let sox = await fetch('ws://0.0.0.0:3005/');
-    socket = io('https://emotitalk.azurewebsites.net/');
+    socket = io('ws://172.174.137.255:8080/');
 
     socket.on('connect', () => {
       socket.emit("connected");
