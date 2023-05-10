@@ -1,46 +1,68 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Selector({dispatcher}) {
-    let txtElement, txtElementHeight, txtElementHeightOG;
+    let txtElement, txtElementHeight, txtElementHeightOG, inputCount;
+    let charMax = 512;
+
+    let [charCount, setCharCount] = useState(0);
     useEffect(() => {
-        heightAdjust();
+        textareaChange();
     }, [])
-    const sendMessage = (e) => {
+
+    //- textarea events
+    const textareaReset = () => {
         txtElement = document.getElementById("messageTxt");
-        if(e.code && e.code!="MetaRight") return;
-        let txt = txtElement.value;
-        console.log(txtElement);
-        dispatcher({type: "MESSAGE_SEND", msg: txt});
-        clearMessage();
+        txtElement.style.height = 0;
     }
-    const heightAdjust = (num) => {
+    const textareaChange = (num) => {
         txtElement = document.getElementById("messageTxt");
         txtElementHeight = txtElement.scrollHeight;
         if(!txtElementHeightOG) txtElementHeightOG = txtElementHeight;
         txtElementHeight = (isNaN(num)) ? txtElementHeight : txtElementHeightOG;
         txtElement.style.height = txtElementHeight + "px";
+        //- character count
+        inputCount = txtElement.value.length;
+        if(inputCount===0) txtElement.removeAttribute("style");
+        setCharCount(inputCount);
     }
     const textareaFocus = () => {
-        document.addEventListener("keyup", sendMessage);
+        document.addEventListener("keyup", sendText);
     }
     const textareaBlur = () => {
-        document.removeEventListener("keyup", sendMessage);
+        document.removeEventListener("keyup", sendText);
     }
-    const clearMessage = () => {
+    //- message features
+    const clearText = () => {
         txtElement = document.getElementById("messageTxt");
         txtElement.value = "";
-        heightAdjust(txtElementHeightOG);
+        textareaChange(txtElementHeightOG);
     }
+    const sendText = (e) => {
+        txtElement = document.getElementById("messageTxt");
+        if(e.code && e.code!="MetaRight") return;
+        let txt = txtElement.value;
+        console.log(txtElement);
+        dispatcher({type: "MESSAGE_SEND", msg: txt});
+        clearText();
+    }
+
+    //- render
     return (
         <div className="c-messageBox">
-            <textarea
-                id="messageTxt"
-                onChange={heightAdjust}
-                onFocus={textareaFocus}
-                onBlur={textareaBlur}
-            ></textarea>
-            {/* <button onClick={clearMessage}>Clear</button> */}
-            <button onClick={sendMessage}>⬆</button>
+            <div className="c-messageBox__input">
+                <textarea
+                    id="messageTxt"
+                    rows="1"
+                    maxLength={charMax}
+                    onInput={textareaReset}
+                    onChange={textareaChange}
+                    onFocus={textareaFocus}
+                    onBlur={textareaBlur}
+                ></textarea>
+                <span>{charCount}/{charMax}</span>
+            </div>
+            <button className="c-messageBox__action" onClick={sendText}>⬆</button>
+            <div className="c-messageBox__footer">Keyboard Submit = ⌘ + Enter (Mac), Ctrl + Enter (Win)</div>
         </div>
     )
 }

@@ -24,7 +24,6 @@ export default function Home() {
   })
 
   const initializeSocket = async () => {
-    // let sox = await fetch('ws://0.0.0.0:3005/');
     socket = io('https://emotitalk.net/');
 
     socket.on('connect', () => {
@@ -36,7 +35,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    initializeSocket();
+    // initializeSocket();
   }, [])
 
   return (
