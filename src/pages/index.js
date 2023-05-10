@@ -32,6 +32,9 @@ export default function Home() {
     socket.on('handshake', obj => {
       console.log('Handshake Complete', obj);
     })
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} disconnected`);
+    })
   }
 
   useEffect(() => {
