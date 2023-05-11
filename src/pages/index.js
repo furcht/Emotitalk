@@ -2,6 +2,7 @@ import MainNav from "@/components/MainNav";
 import ChatWindow from "@/components/ChatWindow";
 import MessageBox from "@/components/MessageBox";
 import RoomsPanel from "@/components/RoomsPanel";
+import Overlay from "@/components/Overlay";
 
 import { io } from "socket.io-client";
 let socket;
@@ -9,6 +10,8 @@ let socket;
 import { useReducer, useEffect } from "react";
 const baseReducer = (state, action) => {
   switch(action.type) {
+    case "CONNECTED":
+
     case "MESSAGE_SEND":
       console.log('Broadcast Message');
       return {...state};
@@ -26,14 +29,8 @@ export default function Home() {
   const initializeSocket = async () => {
     socket = io('https://emotitalk.net/');
 
-    socket.on('connect', () => {
-      socket.emit("connected");
-    })
-    socket.on('handshake', obj => {
-      console.log('Handshake Complete', obj);
-    })
-    socket.on('disconnect', () => {
-      console.log(`${socket.id} disconnected`);
+    socket.on('connect', obj => {
+      console.log("LOADED:", obj)
     })
   }
 
@@ -42,13 +39,16 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="l-mainView">
-      <MainNav />
-      <div className="l-mainView__chat">
-        <ChatWindow />
-        <MessageBox dispatcher={dispatchState} />
-      </div>
-      <RoomsPanel />
-    </main>
+    <>
+      <main className="l-mainView">
+        <MainNav />
+        <div className="l-mainView__chat">
+          <ChatWindow />
+          <MessageBox dispatcher={dispatchState} />
+        </div>
+        <RoomsPanel />
+      </main>
+      <Overlay />
+    </>
   )
 }

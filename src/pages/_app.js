@@ -9,6 +9,7 @@ import '@/styles/mainNav.component.scss';
 import '@/styles/chatWindow.component.scss';
 import '@/styles/messageBox.component.scss';
 import '@/styles/roomsPanel.component.scss';
+import '@/styles/overlay.component.scss';
 
 import { Josefin_Sans } from 'next/font/google';
 const josefinSans = Josefin_Sans({ subsets: ['latin'] });
