@@ -29,7 +29,7 @@ export default function Home() {
   const initializeSocket = async () => {
     socket = io('https://emotitalk.net/');
 
-    socket.on('connect', obj => {
+    socket.on('initialized', obj => {
       console.log("LOADED:", obj)
     })
   }
